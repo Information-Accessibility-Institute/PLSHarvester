@@ -45,6 +45,7 @@ See the `LICENSE` file for details.
 
 This project includes data derived from UniDic.
 The UniDic license is provided in `third-party-notices\UNIDIC-LICENSE.txt`.
+
 ---
 
 ## Samples
