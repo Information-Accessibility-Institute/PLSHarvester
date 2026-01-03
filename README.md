@@ -45,6 +45,11 @@ See the `LICENSE` file for details.
 
 This project includes data derived from UniDic.
 The UniDic license is provided in `third-party-notices\UNIDIC-LICENSE.txt`.
+---
+
+## Samples
+
+Sample input and output files are provided in the `samples/` directory.
 
 
 # PLSHarvester（日本語）
@@ -91,3 +96,9 @@ TSV 形式のデータを入力として処理し、PLS 仕様に準拠した
 
 本プロジェクトには UniDic に由来するデータが含まれています。  
 UniDic のライセンス文書は、`third-party-notices\UNIDIC-LICENSE.txt` に収録されています。
+
+---
+
+## サンプル
+
+サンプル入力ファイルと出力ファイルは`samples/`ディレクトリにあります。
