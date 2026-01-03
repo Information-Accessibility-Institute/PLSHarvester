@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="third-party-notices\UNIDIC-LICENSE.txt" />
+    <Compile Include="HtmlExtractor.fs" />
+    <Compile Include="EpubExtractor.fs" />
+    <Compile Include="KanjiExtractor.fs" />
+    <Compile Include="DictionaryBuilder.fs" />
+    <Compile Include="PLSWriter.fs" />
+    <Compile Include="PLSCleaner.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="data\subset.tsv" />
+    <Folder Include="THIRD-PARTY-NOTICES\" />
+  </ItemGroup>
+
+  <ItemGroup />
+
+</Project>
