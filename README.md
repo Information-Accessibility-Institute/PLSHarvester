@@ -1,105 +1,174 @@
 # PLSHarvester
 
-PLSHarvester is a tool for harvesting and generating PLS
-(Pronunciation Lexicon Specification) lexicons for accessible
-text-to-speech (TTS) systems.
+（日本語・簡易説明）  
+日本語 EPUB または HTML から語彙候補を抽出し、PLS 辞書（草案）を生成するツールです。
 
-The primary goal of this project is to support the creation of
-high-quality pronunciation lexicons from existing linguistic
-resources, with a particular focus on Japanese accessibility
-requirements.
+(English overview)  
+PLS Harvester extracts candidate unknown words from Japanese EPUB or HTML files  and generates a draft Pronunciation Lexicon (PLS) dictionary.
+
+**Full Japanese documentation:** README_ja.md
+
+---
+
+## What is PLSHarvester?
+
+PLSHarvester is a tool for harvesting and generating PLS (Pronunciation Lexicon Specification) dictionaries for use in accessible text-to-speech (TTS) systems.
+
+Its primary purpose is to assist in producing high-quality pronunciation lexicons from existing textual resources, with a special focus on Japanese accessibility requirements.
 
 ---
 
 ## Overview
 
-PLSHarvester processes linguistic data (e.g. TSV files derived from
-morphological dictionaries such as UniDic) and generates PLS-compliant
-lexicons that can be used by screen readers and other TTS engines.
+PLSHarvester supports the following inputs:
 
-Typical use cases include:
+- An EPUB or HTML file
+- A TSV dictionary of known words to be excluded
 
-- Building pronunciation lexicons for accessible reading systems
-- Supporting correct reading of proper names, technical terms, and
-  domain-specific vocabulary
-- Research and experimentation related to accessibility, TTS, and
-  spoken language processing
+And it produces the following output:
+
+- A PLS dictionary containing `<lexeme>` entries for Kanji-based words that are not already known, with empty `<pronunciation>` elements (to be filled by human editors or downstream tools)
+
 
 ---
 
 ## Status
 
-This project is currently under active development.
-Interfaces, data formats, and internal structures may change.
+This project is under active development.  Interfaces and data structures may change.
 
 ---
 
-## License
+## Typical Use Cases
 
-This project is licensed under the MIT License.
-See the `LICENSE` file for details.
-
----
-
-## Third-party data and licenses
-
-This project includes data derived from UniDic.
-The UniDic license is provided in `third-party-notices\UNIDIC-LICENSE.txt`.
+- Improving TTS accuracy for screen readers and accessible reading systems  
+- Ensuring proper reading of proper names, technical terms, and domain-specific vocabulary  
+- Research and experimentation in accessibility, TTS, and computational linguistics  
 
 ---
 
-## Samples
+## Requirements
 
-Sample input and output files are provided in the `samples/` directory.
-
-
-# PLSHarvester（日本語）
-
-PLSHarvester は、アクセシブルな音声合成（TTS）のための  
-PLS（Pronunciation Lexicon Specification）辞書を生成・収集する
-ツールです。
-
-既存の言語資源を活用して、高品質な発音辞書を作成することを
-目的としており、特に **日本語アクセシビリティ** の要件を
-重視しています。
+- No runtime required (self-contained executables provided)
+- Binaries included for Windows, macOS, and Linux
 
 ---
 
-## 概要
+## Pre-built Binaries and Usage Guide
 
-PLSHarvester は、UniDic などの形態素辞書から派生した
-TSV 形式のデータを入力として処理し、PLS 仕様に準拠した
-発音辞書を生成します。
+Pre-built ZIP archives are available:
 
-想定される用途は次のとおりです。
+https://github.com/Information-Accessibility-Institute/PLSHarvester/releases
 
-- アクセシブルな読書・閲覧システム向けの発音辞書作成
-- 固有名詞、専門用語、分野固有語彙の正確な読みの支援
-- アクセシビリティ、音声合成、音声言語処理に関する研究・検証
+### Provided ZIP files
 
----
+- **PLSHarvester-win-x64.zip**（Windows）
+- **PLSHarvester-linux-x64.zip**（Linux）
+- **PLSHarvester-osx-arm64.zip**（macOS Apple Silicon）
 
-## 開発状況
+Each ZIP contains:
 
-本プロジェクトは現在開発中です。  
-インタフェースやデータ形式、内部構造は変更される可能性があります。
-
----
-
-## ライセンス
-
-本プロジェクトは MIT ライセンスの下で公開されています。  
-詳細は `LICENSE` ファイルを参照してください。
+- Platform-specific executable  
+- `data/subset.tsv`  
+- `samples/` directory  
+- `LICENSE`  
+- `README.md`  
+- `README_ja.md`  
+- `THIRD-PARTY-NOTICES/UNIDIC-LICENSE.txt`
 
 ---
 
-## サードパーティデータおよびライセンス
+## How to Run
 
-本プロジェクトには UniDic に由来するデータが含まれています。  
-UniDic のライセンス文書は、`third-party-notices\UNIDIC-LICENSE.txt` に収録されています。
+### **Command-line Syntax**
+
+
+#### Arguments
+
+| Argument | Meaning |
+|---------|---------|
+| `INPUT_PATH` | EPUB or HTML file |
+| `--dict external.tsv` | (Optional) an additional TSV dictionary to *exclude* words already known |
+| `--out out.xml` | (Optional) output PLS file path (default: harvested.pls) |
 
 ---
 
-## サンプル
+### Windows
+```powershell
+.\PLSHarvester.exe input.epub --dict data\subset.tsv --out output.pls
+```
 
-サンプル入力ファイルと出力ファイルは`samples/`ディレクトリにあります。
+#### Example:
+
+```powershell
+PLSHarvester.exe samples\kusamakura\aozorabunko_00776.epub --dict data\subset.tsv --out kusamakura.pls
+```
+---
+
+### Linux
+Make executable:
+```bash
+chmod +x PLSHarvester
+```
+Run:
+```bash
+./PLSHarvester input.epub --dict external.tsv --out output.pls
+```
+
+#### Example:
+```bash
+./PLSHarvester samples/kusamakura/aozorabunko_00776.epub --dict data/subset.tsv --out out.pls
+```
+
+---
+
+### macOS (Apple Silicon)
+
+Make executable:
+
+```bash
+chmod +x PLSHarvester
+```
+
+If Gatekeeper blocks execution:
+
+```bash
+xattr -d com.apple.quarantine PLSHarvester
+```
+
+Run:
+
+```bash
+./PLSHarvester input.epub --dict external.tsv --out output.pls
+```
+
+#### Example:
+```bash
+./PLSHarvester samples/kusamakura/aozorabunko_00776.epub --dict data/subset.tsv --out out.pls
+```
+
+# Samples
+
+The `samples/`directory contains sample inputs and outputs.
+`samples/kusamakura/` contains:
+
+- Example EPUB (from Aozora Bunko)
+- Example PLS file
+- README explaining processing flow
+
+# License
+
+Included files:
+
+`LICENSE` — License for PLSHarvester
+
+`THIRD-PARTY-NOTICES/UNIDIC-LICENSE.txt` — UniDic license
+
+UniDic data are used only for generating a reduced subset.
+
+# Acknowledgements
+
+This tool uses subset data derived from UniDic.
+UniDic is licensed under the conditions in
+THIRD-PARTY-NOTICES/UNIDIC-LICENSE.txt.
+
+We thank the UniDic Consortium and Aozora Bunko.
